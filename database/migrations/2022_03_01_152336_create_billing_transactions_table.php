@@ -20,7 +20,7 @@ class CreateBillingTransactionsTable extends Migration
             $table->integer('payment_amount')->default(0);
             $table->tinyInteger('status')->default(0);
             $table->foreignIdFor(PatientVisit::class)->nullable()->constrained()->onDelete('cascade')->onUpdate('cascade');
-            $table->foreignIdFor(BillingInvoice::class)->nullable()->constrained()->onDelete('cascade')->onUpdate('cascade');
+            $table->foreignIdFor(BillingInvoice::class)->nullable()->onDelete('cascade')->onUpdate('cascade');
             $table->foreignId('created_by_id')->nullable()->constrained('users')->onDelete('cascade')->onUpdate('cascade');
             $table->foreignId('updated_by_id')->nullable()->constrained('users')->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();
