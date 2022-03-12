@@ -17,11 +17,23 @@ class CreateDoctorsTable extends Migration
     {
         Schema::create('doctors', function (Blueprint $table) {
             $table->id();
-            $table->string('about_doctor')->nullable();
-            $table->string('charge')->default(0);
-            $table->string('experience')->nullable();
+            $table->string('firstname');
+            $table->string('lastname');
+            $table->string('username');
+            $table->string('email')->unique();
+            $table->string('password');
+            $table->date('dob');
+            $table->string('gender')->comment('M - Male, F - Female');
+            $table->text('address')->nullable();
+            $table->string('country')->nullable();
+            $table->string('state')->nullable();
+            $table->string('city')->nullable();
+            $table->string('phone')->nullable();
+            $table->string('image')->nullable();
+            $table->text('short_bio')->nullable();
+            $table->tinyInteger('status')->default(0);
             $table->foreignIdFor(User::class)->nullable()->constrained()->onDelete('cascade')->onUpdate('cascade');
-            $table->foreignIdFor(Specialist::class)->nullable()->constrained()->onDelete('cascade')->onUpdate('cascade');
+            // $table->foreignIdFor(Specialist::class)->nullable()->constrained()->onDelete('cascade')->onUpdate('cascade');
             $table->foreignId('created_by_id')->nullable()->constrained('users')->onDelete('cascade')->onUpdate('cascade');
             $table->foreignId('updated_by_id')->nullable()->constrained('users')->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();

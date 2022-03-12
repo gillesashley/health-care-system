@@ -1,5 +1,8 @@
 <?php
 
+use App\Http\Controllers\DoctorController;
+use App\Http\Controllers\PatientController;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -21,6 +24,9 @@ Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-Auth::routes();
-
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::middleware('auth')->prefix('admin')->name('admin.')->group(function () {
+    Route::resources([
+        'doctors' => DoctorController::class,
+        'patients' => PatientController::class,
+    ]);
+});

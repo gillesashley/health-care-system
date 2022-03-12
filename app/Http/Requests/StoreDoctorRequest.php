@@ -24,7 +24,10 @@ class StoreDoctorRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'firstname' => 'required|max:255',
+            'lastname' => 'required|max:255',
+            'username' => 'required|unique:doctors|max:50',
+            'email' => 'required|unique:doctors',
         ];
     }
 }

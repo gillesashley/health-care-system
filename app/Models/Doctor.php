@@ -14,11 +14,23 @@ class Doctor extends Model
     use UpdatableAndCreateable;
 
     protected $fillable = [
-        'about_doctor',
-        'charge',
-        'experience',
+        'firstname',
+        'lastname',
+        'username',
+        'email',
+        'password',
+        'dob',
+        'gender',
+        'address',
+        'country',
+        'state',
+        'city',
+        'phone',
+        'image',
+        'short_bio',
+        'status',
         'user_id',
-        'specialist_id',
+        // 'specialist_id',
         'created_by_id',
         'updated_by_id',
     ];

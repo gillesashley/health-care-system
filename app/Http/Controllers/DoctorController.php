@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreDoctorRequest;
 use App\Http\Requests\UpdateDoctorRequest;
 use App\Models\Doctor;
+use GuzzleHttp\Psr7\Request;
+use Illuminate\Support\Facades\DB;
 
 class DoctorController extends Controller
 {
@@ -15,7 +17,9 @@ class DoctorController extends Controller
      */
     public function index()
     {
-        //
+        $doctors = DB::table('doctors')->select('*')->get();
+
+        return view('admin.doctors.index', compact('doctors'));
     }
 
     /**
@@ -25,7 +29,7 @@ class DoctorController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.doctors.create');
     }
 
     /**
@@ -36,7 +40,6 @@ class DoctorController extends Controller
      */
     public function store(StoreDoctorRequest $request)
     {
-        //
     }
 
     /**
