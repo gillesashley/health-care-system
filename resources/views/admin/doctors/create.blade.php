@@ -6,67 +6,110 @@
         <div class="row">
             <div class="col-lg-8 offset-lg-2">
                 <h4 class="page-title">Add Doctor</h4>
+                @if (session('success'))
+                    <div class="alert alert-success">
+                        {{ session('success') }}
+                    </div>
+                @endif
             </div>
         </div>
         <div class="row">
             <div class="col-lg-8 offset-lg-2">
-                <form>
+                <form action="{{ route('admin.doctors.store') }}" method="POST" enctype="multipart/form-data">
+                    @csrf
                     <div class="row">
                         <div class="col-sm-6">
                             <div class="form-group">
-                                <label>First Name <span class="text-danger">*</span></label>
-                                <input class="form-control" type="text">
+                                <label for="firstname">First Name <span class="text-danger">*</span></label>
+                                <input class="form-control @error('firstname') is-invalid @enderror" type="text" id="firstname" name="firstname">
+
+                                @error('firstname')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                                @enderror
                             </div>
                         </div>
                         <div class="col-sm-6">
                             <div class="form-group">
-                                <label>Last Name</label>
-                                <input class="form-control" type="text">
+                                <label for="lastname">Last Name</label>
+                                <input class="form-control @error('lastname') is-invalid @enderror" type="text" id="lastname" name="lastname">
+
+                                @error('lastname')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                                @enderror
                             </div>
                         </div>
                         <div class="col-sm-6">
                             <div class="form-group">
-                                <label>Username <span class="text-danger">*</span></label>
-                                <input class="form-control" type="text">
+                                <label for="username">Username <span class="text-danger">*</span></label>
+                                <input class="form-control @error('username') is-invalid @enderror" type="text" id="username" name="username">
+
+                                @error('username')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                                @enderror
                             </div>
                         </div>
                         <div class="col-sm-6">
                             <div class="form-group">
-                                <label>Email <span class="text-danger">*</span></label>
-                                <input class="form-control" type="email">
+                                <label for="email">Email <span class="text-danger">*</span></label>
+
+                                <input class="form-control @error('email') is-invalid @enderror" type="email" id="email" name="email">
+
+                                @error('email')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                                @enderror
                             </div>
                         </div>
                         <div class="col-sm-6">
                             <div class="form-group">
-                                <label>Password</label>
-                                <input class="form-control" type="password">
+                                <label for="password">Password</label>
+                                <input class="form-control @error('password') is-invalid @enderror" type="password" id="password" name="password" required>
+
+                                @error('password')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                                @enderror
                             </div>
                         </div>
                         <div class="col-sm-6">
                             <div class="form-group">
                                 <label>Confirm Password</label>
-                                <input class="form-control" type="password">
+                                <input class="form-control" type="password" required>
+
+                                @error('password')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                                @enderror
                             </div>
                         </div>
                         <div class="col-sm-6">
                             <div class="form-group">
-                                <label>Date of Birth</label>
+                                <label for="dob">Date of Birth</label>
                                 <div class="cal-icon">
-                                    <input type="text" class="form-control datetimepicker">
+                                    <input type="text" class="form-control datetimepicker" id="dob" name="dob">
                                 </div>
                             </div>
                         </div>
                         <div class="col-sm-6">
                             <div class="form-group gender-select">
-                                <label class="gen-label">Gender:</label>
+                                <label class="gen-label" for="gender">Gender:</label>
                                 <div class="form-check-inline">
                                     <label class="form-check-label">
-                                        <input type="radio" name="gender" class="form-check-input">Male
+                                        <input type="radio" name="gender" class="form-check-input" value="M">Male
                                     </label>
                                 </div>
                                 <div class="form-check-inline">
                                     <label class="form-check-label">
-                                        <input type="radio" name="gender" class="form-check-input">Female
+                                        <input type="radio" name="gender" class="form-check-input" value="F">Female
                                     </label>
                                 </div>
                             </div>
@@ -75,43 +118,62 @@
                             <div class="row">
                                 <div class="col-sm-12">
                                     <div class="form-group">
-                                        <label>Address</label>
-                                        <input type="text" class="form-control ">
+                                        <label for="address">Address</label>
+                                        <input type="text" class="form-control @error('address') is-invalid @enderror" id="address" name="address">
                                     </div>
+
+                                    @error('address')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                    @enderror
                                 </div>
                                 <div class="col-sm-6 col-md-6 col-lg-3">
                                     <div class="form-group">
-                                        <label>Country</label>
+                                        <label for="country">Country</label>
                                         <select class="form-control select select2-hidden-accessible" tabindex="-1"
-                                            aria-hidden="true">
-                                            <option>USA</option>
-                                            <option>United Kingdom</option>
+                                            aria-hidden="true" id="country" name="country">
+                                            <option value="USA">USA</option>
+                                            <option value="UK">United Kingdom</option>
+                                            <option value="Ghana">Ghana</option>
                                         </select>
                                     </div>
                                 </div>
                                 <div class="col-sm-6 col-md-6 col-lg-3">
                                     <div class="form-group">
-                                        <label>State/Region</label>
+                                        <label for="state">State/Region</label>
                                         <select class="form-control select select2-hidden-accessible" tabindex="-1"
-                                            aria-hidden="true">
-                                            <option>Greater Accra</option>
-                                            <option>Ashanti Region</option>
-                                            <option>Eastern Region</option>
+                                            aria-hidden="true" id="state" name="state">
+                                            <option value="Greater Accra">Greater Accra</option>
+                                            <option value="Ashanti Region">Ashanti Region</option>
+                                            <option value="Easter Region">Eastern Region</option>
                                         </select>
                                     </div>
                                 </div>
                                 <div class="col-sm-6 col-md-6 col-lg-3">
                                     <div class="form-group">
-                                        <label>City</label>
-                                        <input type="text" class="form-control">
+                                        <label for="city">City</label>
+                                        <input type="text" class="form-control" id="city" name="city">
+
+                                        @error('city')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                        @enderror
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <div class="col-sm-6">
                             <div class="form-group">
-                                <label>Phone </label>
-                                <input class="form-control" type="text">
+                                <label for="phone">Phone </label>
+                                <input class="form-control" type="text @error('title') is-invalid @enderror" id="phone" name="phone">
+
+                                @error('phone')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                                @enderror
                             </div>
                         </div>
                         <div class="col-sm-6">
@@ -122,268 +184,37 @@
                                         <img alt="" src="{{ asset('frontend/img/user.jpg') }}">
                                     </div>
                                     <div class="upload-input">
-                                        <input type="file" class="form-control">
+                                        <input type="file" class="form-control" id="image" id="image">
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label>Short Biography</label>
-                        <textarea class="form-control" rows="3" cols="30"></textarea>
+                        <label for="short_bio">Short Biography</label>
+                        <textarea class="form-control" rows="3" cols="30" id="short_bio" name="short_bio"></textarea>
                     </div>
                     <div class="form-group">
-                        <label class="display-block">Status</label>
+                        <label class="display-block" for="status">Status</label>
                         <div class="form-check form-check-inline">
                             <input class="form-check-input" type="radio" name="status" id="doctor_active"
-                                value="option1" checked="">
+                                value="active" checked="">
                             <label class="form-check-label" for="doctor_active">
                                 Active
                             </label>
                         </div>
                         <div class="form-check form-check-inline">
                             <input class="form-check-input" type="radio" name="status" id="doctor_inactive"
-                                value="option2">
+                                value="inactive">
                             <label class="form-check-label" for="doctor_inactive">
                                 Inactive
                             </label>
                         </div>
                     </div>
                     <div class="m-t-20 text-center">
-                        <button class="btn btn-primary submit-btn">Create Doctor</button>
+                        <button type="submit" class="btn btn-primary submit-btn">Create Doctor</button>
                     </div>
                 </form>
-            </div>
-        </div>
-    </div>
-    <div class="notification-box">
-        <div class="msg-sidebar notifications msg-noti">
-            <div class="topnav-dropdown-header">
-                <span>Messages</span>
-            </div>
-            <div class="slimScrollDiv" style="position: relative; overflow: hidden; width: auto; height: 565px;">
-                <div class="drop-scroll msg-list-scroll" id="msg_list"
-                    style="overflow: hidden; width: auto; height: 565px;">
-                    <ul class="list-box">
-                        <li>
-                            <a href="chat.html">
-                                <div class="list-item">
-                                    <div class="list-left">
-                                        <span class="avatar">R</span>
-                                    </div>
-                                    <div class="list-body">
-                                        <span class="message-author">Richard Miles </span>
-                                        <span class="message-time">12:28 AM</span>
-                                        <div class="clearfix"></div>
-                                        <span class="message-content">Lorem ipsum dolor sit amet, consectetur
-                                            adipiscing</span>
-                                    </div>
-                                </div>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="chat.html">
-                                <div class="list-item new-message">
-                                    <div class="list-left">
-                                        <span class="avatar">J</span>
-                                    </div>
-                                    <div class="list-body">
-                                        <span class="message-author">John Doe</span>
-                                        <span class="message-time">1 Aug</span>
-                                        <div class="clearfix"></div>
-                                        <span class="message-content">Lorem ipsum dolor sit amet, consectetur
-                                            adipiscing</span>
-                                    </div>
-                                </div>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="chat.html">
-                                <div class="list-item">
-                                    <div class="list-left">
-                                        <span class="avatar">T</span>
-                                    </div>
-                                    <div class="list-body">
-                                        <span class="message-author"> Tarah Shropshire </span>
-                                        <span class="message-time">12:28 AM</span>
-                                        <div class="clearfix"></div>
-                                        <span class="message-content">Lorem ipsum dolor sit amet, consectetur
-                                            adipiscing</span>
-                                    </div>
-                                </div>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="chat.html">
-                                <div class="list-item">
-                                    <div class="list-left">
-                                        <span class="avatar">M</span>
-                                    </div>
-                                    <div class="list-body">
-                                        <span class="message-author">Mike Litorus</span>
-                                        <span class="message-time">12:28 AM</span>
-                                        <div class="clearfix"></div>
-                                        <span class="message-content">Lorem ipsum dolor sit amet, consectetur
-                                            adipiscing</span>
-                                    </div>
-                                </div>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="chat.html">
-                                <div class="list-item">
-                                    <div class="list-left">
-                                        <span class="avatar">C</span>
-                                    </div>
-                                    <div class="list-body">
-                                        <span class="message-author"> Catherine Manseau </span>
-                                        <span class="message-time">12:28 AM</span>
-                                        <div class="clearfix"></div>
-                                        <span class="message-content">Lorem ipsum dolor sit amet, consectetur
-                                            adipiscing</span>
-                                    </div>
-                                </div>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="chat.html">
-                                <div class="list-item">
-                                    <div class="list-left">
-                                        <span class="avatar">D</span>
-                                    </div>
-                                    <div class="list-body">
-                                        <span class="message-author"> Domenic Houston </span>
-                                        <span class="message-time">12:28 AM</span>
-                                        <div class="clearfix"></div>
-                                        <span class="message-content">Lorem ipsum dolor sit amet, consectetur
-                                            adipiscing</span>
-                                    </div>
-                                </div>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="chat.html">
-                                <div class="list-item">
-                                    <div class="list-left">
-                                        <span class="avatar">B</span>
-                                    </div>
-                                    <div class="list-body">
-                                        <span class="message-author"> Buster Wigton </span>
-                                        <span class="message-time">12:28 AM</span>
-                                        <div class="clearfix"></div>
-                                        <span class="message-content">Lorem ipsum dolor sit amet, consectetur
-                                            adipiscing</span>
-                                    </div>
-                                </div>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="chat.html">
-                                <div class="list-item">
-                                    <div class="list-left">
-                                        <span class="avatar">R</span>
-                                    </div>
-                                    <div class="list-body">
-                                        <span class="message-author"> Rolland Webber </span>
-                                        <span class="message-time">12:28 AM</span>
-                                        <div class="clearfix"></div>
-                                        <span class="message-content">Lorem ipsum dolor sit amet, consectetur
-                                            adipiscing</span>
-                                    </div>
-                                </div>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="chat.html">
-                                <div class="list-item">
-                                    <div class="list-left">
-                                        <span class="avatar">C</span>
-                                    </div>
-                                    <div class="list-body">
-                                        <span class="message-author"> Claire Mapes </span>
-                                        <span class="message-time">12:28 AM</span>
-                                        <div class="clearfix"></div>
-                                        <span class="message-content">Lorem ipsum dolor sit amet, consectetur
-                                            adipiscing</span>
-                                    </div>
-                                </div>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="chat.html">
-                                <div class="list-item">
-                                    <div class="list-left">
-                                        <span class="avatar">M</span>
-                                    </div>
-                                    <div class="list-body">
-                                        <span class="message-author">Melita Faucher</span>
-                                        <span class="message-time">12:28 AM</span>
-                                        <div class="clearfix"></div>
-                                        <span class="message-content">Lorem ipsum dolor sit amet, consectetur
-                                            adipiscing</span>
-                                    </div>
-                                </div>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="chat.html">
-                                <div class="list-item">
-                                    <div class="list-left">
-                                        <span class="avatar">J</span>
-                                    </div>
-                                    <div class="list-body">
-                                        <span class="message-author">Jeffery Lalor</span>
-                                        <span class="message-time">12:28 AM</span>
-                                        <div class="clearfix"></div>
-                                        <span class="message-content">Lorem ipsum dolor sit amet, consectetur
-                                            adipiscing</span>
-                                    </div>
-                                </div>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="chat.html">
-                                <div class="list-item">
-                                    <div class="list-left">
-                                        <span class="avatar">L</span>
-                                    </div>
-                                    <div class="list-body">
-                                        <span class="message-author">Loren Gatlin</span>
-                                        <span class="message-time">12:28 AM</span>
-                                        <div class="clearfix"></div>
-                                        <span class="message-content">Lorem ipsum dolor sit amet, consectetur
-                                            adipiscing</span>
-                                    </div>
-                                </div>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="chat.html">
-                                <div class="list-item">
-                                    <div class="list-left">
-                                        <span class="avatar">T</span>
-                                    </div>
-                                    <div class="list-body">
-                                        <span class="message-author">Tarah Shropshire</span>
-                                        <span class="message-time">12:28 AM</span>
-                                        <div class="clearfix"></div>
-                                        <span class="message-content">Lorem ipsum dolor sit amet, consectetur
-                                            adipiscing</span>
-                                    </div>
-                                </div>
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-                <div class="slimScrollBar"
-                    style="background: rgb(135, 135, 135); width: 4px; position: absolute; top: 0px; opacity: 0.4; display: block; border-radius: 0px; z-index: 99; right: 1px; height: 816px;">
-                </div>
-                <div class="slimScrollRail"
-                    style="width: 4px; height: 100%; position: absolute; top: 0px; display: none; border-radius: 7px; background: rgb(51, 51, 51); opacity: 0.2; z-index: 90; right: 1px;">
-                </div>
-            </div>
-            <div class="topnav-dropdown-footer">
-                <a href="chat.html">See all messages</a>
             </div>
         </div>
     </div>

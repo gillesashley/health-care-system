@@ -7,6 +7,7 @@ use App\Http\Requests\UpdateDoctorRequest;
 use App\Models\Doctor;
 use GuzzleHttp\Psr7\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 
 class DoctorController extends Controller
 {
@@ -40,6 +41,31 @@ class DoctorController extends Controller
      */
     public function store(StoreDoctorRequest $request)
     {
+        // Retrieve the validated input data...
+        $request->validated();
+
+        $imageName = time() . '.' . request()->image->getClientOriginalExtension();
+        $request()->image->move(public_path('storage/images'), $imageName);
+
+        $doctor = Doctor::create([
+            'firstname' => $request->input('firstname'),
+            'lastname' => $request->input('lastname'),
+            'username' => $request->input('username'),
+            'email' => $request->input('email'),
+            'password' => $request->input('password'),
+            'dob' => $request->input('dob'),
+            'gender' => $request->input('gender'),
+            'address' => $request->input('address'),
+            'country' => $request->input('country'),
+            'state' => $request->input('state'),
+            'city' => $request->input('city'),
+            'phone' => $request->input('phone'),
+            'image' => $imageName,
+            'short_bio' => $request->input('short_bio'),
+            'status' => $request->input('status'),
+        ]);
+
+        return back()->with('success', 'Doctor Created!!');
     }
 
     /**
@@ -73,7 +99,7 @@ class DoctorController extends Controller
      */
     public function update(UpdateDoctorRequest $request, Doctor $doctor)
     {
-        //
+        $request->validated();
     }
 
     /**

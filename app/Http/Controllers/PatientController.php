@@ -15,7 +15,7 @@ class PatientController extends Controller
      */
     public function index()
     {
-        //
+        return view('admin.patients.index');
     }
 
     /**
@@ -25,7 +25,7 @@ class PatientController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.patients.create');
     }
 
     /**

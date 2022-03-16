@@ -13,6 +13,7 @@
             </div>
         </div>
         <div class="row doctor-grid">
+            @foreach ($doctors as $doctor)
             <div class="col-md-4 col-sm-4  col-lg-3">
                 <div class="profile-widget">
                     <div class="doctor-img">
@@ -26,13 +27,14 @@
                             <a class="dropdown-item" href="#" data-toggle="modal" data-target="#delete_doctor"><i class="fa fa-trash-o m-r-5"></i> Delete</a>
                         </div>
                     </div>
-                    <h4 class="doctor-name text-ellipsis"><a href="profile.html">Cristina Groves</a></h4>
+                    <h4 class="doctor-name text-ellipsis"><a href="profile.html">{{ $doctor->firstname }} {{ $doctor->lastname }}</a></h4>
                     <div class="doc-prof">Gynecologist</div>
                     <div class="user-country">
-                        <i class="fa fa-map-marker"></i> United States, San Francisco
+                        <i class="fa fa-map-marker"></i> {{ $doctor->country }}, {{ $doctor->state }}
                     </div>
                 </div>
             </div>
+            @endforeach
         </div>
     </div>
 </div>
