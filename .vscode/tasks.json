@@ -1,0 +1,57 @@
+{
+    // See https://go.microsoft.com/fwlink/?LinkId=733558
+    // for the documentation about the tasks.json format
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "dc app bash",
+            "linux": "sudo docker-compose exec app bash",
+            "windows": "docker-compose exec app bash",
+            "command": "sudo docker-compose exec app bash",
+            "type": "shell",
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": true,
+                "panel": "dedicated",
+                "showReuseMessage": false,
+                "clear": false
+            }
+        },
+        {
+            "label": "dc db bash",
+            "command": "sudo docker-compose exec db bash",
+            "windows": "docker-compose exec db bash",
+            "linux": "sudo docker-compose exec db bash",
+            "type": "shell",
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": true,
+                "panel": "dedicated",
+                "showReuseMessage": false,
+                "clear": false
+            }
+        },
+        {
+            "label": "dc app start",
+            "command": "sudo docker-compose up -d",
+            "linux": "sudo docker-compose up -d",
+            "windows": "docker-compose up -d",
+            "type": "shell",
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": true,
+                "panel": "dedicated",
+                "showReuseMessage": false,
+                "clear": false
+            }
+        },
+        {
+            "label": "docker notice",
+            "type": "shell",
+            "command": "echo 'There are vs code tasks for this project, opent the command pallet with [ctrl + shift + p > Run task] to see the list of available tasks"
+        }
+    ]
+}
