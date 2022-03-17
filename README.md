@@ -72,5 +72,6 @@ run the vs code task ```dc app start```
 
 ### bash
 run the vs code task ```dc app bash``` for the bash to app
+
 run the vs code task ```dc db bash``` for the bash to db
 
