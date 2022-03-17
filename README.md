@@ -68,10 +68,9 @@ The Laravel framework is open-sourced software licensed under the [MIT license](
 
 ## Running in docker 
 ### start docker processes for the server
-run the vs code task ```ds app start```
+run the vs code task ```dc app start```
 
 ### bash
-open app bash using vs code tasks
+run the vs code task ```dc app bash``` for the bash to app
+run the vs code task ```dc db bash``` for the bash to db
 
-### db 
-open bash to db using vs code tasks
