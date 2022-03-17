@@ -62,3 +62,16 @@ If you discover a security vulnerability within Laravel, please send an e-mail t
 ## License
 
 The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+
+
+#### Extras 
+
+## Running in docker 
+### start docker processes for the server
+run the vs code task ```ds app start```
+
+### bash
+open app bash using vs code tasks
+
+### db 
+open bash to db using vs code tasks
