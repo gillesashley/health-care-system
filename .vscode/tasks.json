@@ -35,9 +35,9 @@
         },
         {
             "label": "dc app start",
-            "command": "sudo docker-compose up -d",
-            "linux": "sudo docker-compose up -d",
-            "windows": "docker-compose up -d",
+            "command": "sudo docker-compose up -d app db",
+            "linux": "sudo docker-compose up -d app db",
+            "windows": "docker-compose up -d app db",
             "type": "shell",
             "presentation": {
                 "echo": true,
@@ -51,7 +51,39 @@
         {
             "label": "docker notice",
             "type": "shell",
-            "command": "echo 'There are vs code tasks for this project, opent the command pallet with [ctrl + shift + p > Run task] to see the list of available tasks"
+            "command": "echo 'There are vs code tasks for this project, opent the command pallet with [ctrl + shift + p > exec task] to see the list of available tasks"
+        },
+        {
+            "label": "dc exec profiler:client",
+            "type": "shell",
+            "command": "sudo docker-compose up pc",
+            "windows": "docker-compose up pc",
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": true,
+                "panel": "shared",
+                "showReuseMessage": true,
+                "clear": false
+            }
+        },
+        {
+            "label": "dc exec profiler:server",
+            "type": "shell",
+            "command": "sudo docker-compose exec app php artisan profiler:server",
+            "windows": "docker-compose exec app php artisan profiler:server",
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": true,
+                "panel": "dedicated",
+                "showReuseMessage": true,
+                "clear": false
+            }
+        },
+        {
+            "label": "dc profiling",
+            "dependsOn": ["dc exec profiler:server","dc exec profiler:client"]
         }
     ]
 }

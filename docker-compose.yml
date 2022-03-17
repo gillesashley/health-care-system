@@ -1,27 +1,38 @@
-version: '3.7'
-services: 
-  app:
-    container_name: app
-    build:
-      context: .
-      dockerfile: .docker/Dockerfile
-    image: 'laravelapp'
-    ports:
-      - 8081:80
-    volumes:
-      - ./:/var/www/html
-    command: "chown -R  www-data:www-data bootstrap/ storage/"
-  db:
-    container_name: db
-    image: mysql:5.7
-    restart: always
-    ports: 
-      - "3307:3306"
-    environment:
-      MYSQL_DATABASE: '${DB_DATABASE}'
-      MYSQL_ALLOW_EMPTY_PASSWORD: 1
-      MYSQL_ROOT_PASSWORD: ""
-    volumes:
-      - ./db:/var/lib/mysql
+version: "3.7"
+services:
+    app:
+        container_name: app
+        build:
+            context: .
+            dockerfile: .docker/Dockerfile
+        image: "laravelapp"
+        ports:
+            - "8081:80"
+            - "8099:8099"
+            - "1901:1901"
+        volumes:
+            - ./:/var/www/html
+    pc:
+        container_name: pc
+        build:
+            context: .
+            dockerfile: .docker/Nodefile
+        image: "profiler"
+        ports:
+            - "8082:8080"
+        volumes:
+            - ./:/var/www/html
+        command: "npm run pc"
 
-  
+    db:
+        container_name: db
+        image: mysql:5.7
+        restart: always
+        ports:
+            - "3307:3306"
+        environment:
+            MYSQL_DATABASE: "${DB_DATABASE}"
+            MYSQL_ALLOW_EMPTY_PASSWORD: 1
+            MYSQL_ROOT_PASSWORD: "${DB_PASSWORD}"
+        volumes:
+            - ./db:/var/lib/mysql
