@@ -89,6 +89,25 @@
         {
             "label": "dc down",
             "command": "sudo docker-compose down"
+        },
+        {
+            "label": "dc drop mysql:database",
+            "type": "shell",
+            "command": "echo \"drop database ${input:database_name};\" | sudo docker-compose exec -T db mysql -u root ; echo \"create database ${input:database_name};\" | sudo docker-compose exec -T db mysql -u root ;echo \"database created; proceeding to import\" ;cat ${input:sqlFullPath} | sudo docker-compose exec -T db mysql -u root laraapp_db; echo \"import complete\""
+        }
+    ],
+    "inputs": [
+        {
+            "id": "sqlFullPath",
+            "description": "Enter full path of sql file",
+            "type": "promptString",
+            "default": "health_care_db.sql"
+        },
+        {
+            "id": "database_name",
+            "description": "Enter the name of the db, check in your .env file",
+            "type": "promptString",
+            "default": "laraapp_db"
         }
     ]
 }
