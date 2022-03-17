@@ -83,7 +83,12 @@
         },
         {
             "label": "dc profiling",
-            "dependsOn": ["dc exec profiler:server","dc exec profiler:client"]
+            "dependsOn": ["dc exec profiler:server", "dc exec profiler:client"]
+        },
+
+        {
+            "label": "dc down",
+            "command": "sudo docker-compose down"
         }
     ]
 }
