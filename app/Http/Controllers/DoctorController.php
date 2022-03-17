@@ -7,7 +7,7 @@ use App\Http\Requests\UpdateDoctorRequest;
 use App\Models\Doctor;
 use GuzzleHttp\Psr7\Request;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 
 class DoctorController extends Controller
 {
@@ -41,31 +41,56 @@ class DoctorController extends Controller
      */
     public function store(StoreDoctorRequest $request)
     {
-        // Retrieve the validated input data...
-        $request->validated();
+        $imageName = null;
 
-        $imageName = time() . '.' . request()->image->getClientOriginalExtension();
-        $request()->image->move(public_path('storage/images'), $imageName);
+        try {
+            // Retrieve the validated input data...
 
-        $doctor = Doctor::create([
-            'firstname' => $request->input('firstname'),
-            'lastname' => $request->input('lastname'),
-            'username' => $request->input('username'),
-            'email' => $request->input('email'),
-            'password' => $request->input('password'),
-            'dob' => $request->input('dob'),
-            'gender' => $request->input('gender'),
-            'address' => $request->input('address'),
-            'country' => $request->input('country'),
-            'state' => $request->input('state'),
-            'city' => $request->input('city'),
-            'phone' => $request->input('phone'),
-            'image' => $imageName,
-            'short_bio' => $request->input('short_bio'),
-            'status' => $request->input('status'),
-        ]);
+            // dd($request->validated());
 
-        return back()->with('success', 'Doctor Created!!');
+
+            $request->validated();
+
+            $imageName = time() . '.' . request()->file('image')->getClientOriginalExtension();
+
+            // $request()->image->move(public_path('storage/images'), $imageName);
+            // $request()->file('image')->storeAs('images',$imageName);
+            //code...
+            $imageName = Storage::putFile('images', $request->file('image'));
+
+            DB::transaction(function () use ($request, $imageName) {
+
+                [$day,$month,$year] = explode('/',$request->validated()['dob']);
+
+                $doctor = Doctor::create([
+                    'firstname' => $request->input('firstname'),
+                    'lastname' => $request->input('lastname'),
+                    'username' => $request->input('username'),
+                    'email' => $request->input('email'),
+                    'password' => $request->input('password'),
+                    'dob' => "$year-$month-$day",
+                    'gender' => $request->input('gender'),
+                    'address' => $request->input('address'),
+                    'country' => $request->input('country'),
+                    'state' => $request->input('state'),
+                    'city' => $request->input('city'),
+                    'phone' => $request->input('phone'),
+                    'image' => $imageName,
+                    'short_bio' => $request->input('short_bio'),
+                    'status' => $request->boolean('status'),
+                ]);
+            });
+
+            return back()->with('success', 'Doctor Created!!');
+
+        } catch (\Throwable $th) {
+            if (strlen($imageName)) {
+                //remove the image if the doctor could not be created
+
+                Storage::delete("images/{$imageName}");
+            }
+            throw $th;
+        }
     }
 
     /**

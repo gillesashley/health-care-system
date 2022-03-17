@@ -24,7 +24,7 @@ Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-Route::middleware('auth')->prefix('admin')->name('admin.')->group(function () {
+Route::middleware(['web','auth'])->prefix('admin')->name('admin.')->group(function () {
     Route::resources([
         'doctors' => DoctorController::class,
         'patients' => PatientController::class,

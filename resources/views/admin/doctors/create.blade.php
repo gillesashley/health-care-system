@@ -11,6 +11,15 @@
                         {{ session('success') }}
                     </div>
                 @endif
+
+                @if($errors->any())
+                    <span>Errors found</span>
+                    @foreach($errors->all() as $error)
+                        <div class="alert alert-warning">
+                            {{$error}}
+                        </div>
+                    @endforeach
+                @endif
             </div>
         </div>
         <div class="row">
@@ -82,7 +91,7 @@
                         <div class="col-sm-6">
                             <div class="form-group">
                                 <label>Confirm Password</label>
-                                <input class="form-control" type="password" required>
+                                <input class="form-control" type="password" required name="confirm_password">
 
                                 @error('password')
                                 <span class="invalid-feedback" role="alert">
@@ -95,7 +104,7 @@
                             <div class="form-group">
                                 <label for="dob">Date of Birth</label>
                                 <div class="cal-icon">
-                                    <input type="text" class="form-control datetimepicker" id="dob" name="dob">
+                                    <input type="text" class="form-control datetimepicker @error('dob') is-invalid @enderror" id="dob" name="dob" type="date">
                                 </div>
                             </div>
                         </div>
@@ -184,7 +193,7 @@
                                         <img alt="" src="{{ asset('frontend/img/user.jpg') }}">
                                     </div>
                                     <div class="upload-input">
-                                        <input type="file" class="form-control" id="image" id="image">
+                                        <input type="file" class="form-control" name="image" id="image">
                                     </div>
                                 </div>
                             </div>
@@ -198,14 +207,14 @@
                         <label class="display-block" for="status">Status</label>
                         <div class="form-check form-check-inline">
                             <input class="form-check-input" type="radio" name="status" id="doctor_active"
-                                value="active" checked="">
+                                value="1" checked="">
                             <label class="form-check-label" for="doctor_active">
                                 Active
                             </label>
                         </div>
                         <div class="form-check form-check-inline">
                             <input class="form-check-input" type="radio" name="status" id="doctor_inactive"
-                                value="inactive">
+                                value="0">
                             <label class="form-check-label" for="doctor_inactive">
                                 Inactive
                             </label>
