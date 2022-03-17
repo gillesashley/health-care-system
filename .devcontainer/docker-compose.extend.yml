@@ -1,0 +1,10 @@
+{
+  "name": "Health App SuperHero",
+
+  // The order of the files is important since later files override previous ones
+  "dockerComposeFile": ["../docker-compose.yml"],
+
+  "service": "your-service-name-here",
+  "workspaceFolder": "/workspace",
+  "shutdownAction": "stopCompose"
+}
