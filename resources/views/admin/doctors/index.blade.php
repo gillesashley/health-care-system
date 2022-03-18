@@ -17,7 +17,7 @@
             <div class="col-md-4 col-sm-4  col-lg-3">
                 <div class="profile-widget">
                     <div class="doctor-img">
-                        <a href="profile.html" class="avatar"><img alt="" src="{{ asset('frontend/img/doctor-thumb-03.jpg') }}"></a>
+                        <a href="profile.html" class="avatar"><img alt="" src="{{ $doctor->image ? asset('storage/'.$doctor->image):asset('frontend/img/doctor-thumb-03.jpg') }}"></a>
                     </div>
                     <div class="dropdown profile-action">
                         <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-ellipsis-v"></i></a>
