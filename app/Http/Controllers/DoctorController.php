@@ -7,6 +7,7 @@ use App\Http\Requests\UpdateDoctorRequest;
 use App\Models\Doctor;
 use GuzzleHttp\Psr7\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 
 class DoctorController extends Controller
@@ -70,7 +71,7 @@ class DoctorController extends Controller
                     'lastname' => $request->input('lastname'),
                     'username' => $request->input('username'),
                     'email' => $request->input('email'),
-                    'password' => $request->input('password'),
+                    'password' => Hash::make($request->input('password')),
                     'dob' => "$year-$month-$day",
                     'gender' => $request->input('gender'),
                     'address' => $request->input('address'),
