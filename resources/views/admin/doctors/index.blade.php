@@ -5,6 +5,9 @@
     <div class="content">
         <div class="row">
             <div class="col-sm-4 col-3">
+                @if (session('success'))
+                    {{ session('success') }}
+                @endif
                 <h4 class="page-title">Doctors</h4>
             </div>
             <div class="col-sm-8 col-9 text-right m-b-20">

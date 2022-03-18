@@ -7,9 +7,7 @@
             <div class="col-lg-8 offset-lg-2">
                 <h4 class="page-title">Add Doctor</h4>
                 @if (session('success'))
-                    <div class="alert alert-success">
-                        {{ session('success') }}
-                    </div>
+                    {{ session('success') }}
                 @endif
 
                 @if($errors->any())
