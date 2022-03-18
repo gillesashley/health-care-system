@@ -101,6 +101,7 @@ class DoctorController extends Controller
      */
     public function show(Doctor $doctor)
     {
+        return view('admin.doctors.create', compact('doctor'));
     }
 
     /**
@@ -111,6 +112,7 @@ class DoctorController extends Controller
      */
     public function edit(Doctor $doctor)
     {
+        return view('admin.doctors.create', compact('doctor'));
     }
 
     /**
