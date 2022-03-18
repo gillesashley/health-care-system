@@ -15,6 +15,8 @@ class Doctor extends Model
 
     protected $table = 'doctors';
     protected $primaryKey = 'id';
+    // protected $password;
+    protected $hidden = ['password'];
 
     protected $fillable = [
         'firstname',

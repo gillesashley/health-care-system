@@ -31,7 +31,10 @@ class DoctorController extends Controller
      */
     public function create()
     {
-        return view('admin.doctors.create');
+        $route_name = 'admin.doctors.store';
+        $route_method = 'POST';
+        $doctor = new  Doctor();
+        return view('admin.doctors.create', compact('route_name', 'route_method', 'doctor'));
     }
 
     /**
@@ -52,12 +55,12 @@ class DoctorController extends Controller
 
             $request->validated();
 
-            $imageName = time() . '.' . request()->file('image')->getClientOriginalExtension();
+            // $imageName = time() . '.' . request()->file('image')->getClientOriginalExtension();
 
-            // $request()->image->move(public_path('storage/images'), $imageName);
-            // $request()->file('image')->storeAs('images',$imageName);
+            // // $request()->image->move(public_path('storage/images'), $imageName);
+            // // $request()->file('image')->storeAs('images',$imageName);
             //code...
-            $imageName = Storage::putFile('images', $request->file('image'));
+            $imageName = Storage::disk('public')->put('images', $request->file('image'));
 
             DB::transaction(function () use ($request, $imageName) {
 
@@ -101,7 +104,9 @@ class DoctorController extends Controller
      */
     public function show(Doctor $doctor)
     {
-        return view('admin.doctors.create', compact('doctor'));
+        $route_name = 'admin.doctors.update';
+        $route_method = 'PATCH';
+        return view('admin.doctors.create', compact('doctor', 'route_name', 'route_method'));
     }
 
     /**
@@ -112,7 +117,10 @@ class DoctorController extends Controller
      */
     public function edit(Doctor $doctor)
     {
-        return view('admin.doctors.create', compact('doctor'));
+
+        $route_name = 'admin.doctors.update';
+        $route_method = 'PATCH';
+        return view('admin.doctors.create', compact('doctor', 'route_name', 'route_method'));
     }
 
     /**
@@ -124,7 +132,36 @@ class DoctorController extends Controller
      */
     public function update(UpdateDoctorRequest $request, Doctor $doctor)
     {
-        $request->validated();
+        $imageName = null;
+
+        try {
+            DB::transaction(function () use ($request, $doctor) {
+                $data = collect($request->validated())->except('image', 'dob');
+                $doctor->update($data->toArray());
+
+                if ($request->has('dob')) {
+                    [$day, $month, $year] = explode('/', $request->validated()['dob']);
+                    $doctor->update(['dob' => "$year-$month-$day"]);
+                }
+
+                if ($request->has('image')) {
+                    if (Storage::disk('public')->exists($doctor->image)) {
+                        Storage::disk('public')->delete($doctor->image);
+                        $doctor->update(['imageName' => '']);
+                    }
+
+                    $imageName = Storage::disk('public')->put('images', $request->file('image'));
+                    $doctor->update(['imageName' => $imageName]);
+                }
+
+                $doctor->refresh();
+
+                return redirect()->route('admin.doctors.show', ['doctor' => $doctor->id])->with('success', 'Doctor Updated', 'doctor');
+            });
+        } catch (\Throwable $th) {
+            Storage::disk('public')->delete("images/{$imageName}");
+            throw $th;
+        }
     }
 
     /**
