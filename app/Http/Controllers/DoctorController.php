@@ -7,6 +7,7 @@ use App\Http\Requests\UpdateDoctorRequest;
 use App\Models\Doctor;
 use GuzzleHttp\Psr7\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 
 class DoctorController extends Controller
@@ -60,14 +61,14 @@ class DoctorController extends Controller
 
             DB::transaction(function () use ($request, $imageName) {
 
-                [$day,$month,$year] = explode('/',$request->validated()['dob']);
+                [$day, $month, $year] = explode('/', $request->validated()['dob']);
 
                 $doctor = Doctor::create([
                     'firstname' => $request->input('firstname'),
                     'lastname' => $request->input('lastname'),
                     'username' => $request->input('username'),
                     'email' => $request->input('email'),
-                    'password' => $request->input('password'),
+                    'password' => Hash::make($request->input('password')),
                     'dob' => "$year-$month-$day",
                     'gender' => $request->input('gender'),
                     'address' => $request->input('address'),
@@ -82,7 +83,6 @@ class DoctorController extends Controller
             });
 
             return back()->with('success', 'Doctor Created!!');
-
         } catch (\Throwable $th) {
             if (strlen($imageName)) {
                 //remove the image if the doctor could not be created
@@ -112,7 +112,7 @@ class DoctorController extends Controller
      */
     public function edit(Doctor $doctor)
     {
-        //
+        return view('admin.doctors.show');
     }
 
     /**
