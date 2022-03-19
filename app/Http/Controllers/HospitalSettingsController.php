@@ -15,7 +15,6 @@ class HospitalSettingsController extends Controller
      */
     public function index()
     {
-        //
     }
 
     /**
@@ -25,7 +24,7 @@ class HospitalSettingsController extends Controller
      */
     public function create()
     {
-        //
+        return view('hospital.create');
     }
 
     /**
