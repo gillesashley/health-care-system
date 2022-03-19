@@ -29,6 +29,8 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+
+    @stack('css')
 </head>
 <body>
     <div id="app">
@@ -61,6 +63,7 @@
     <script src="{{ asset('frontend/js/jquery.fullcalendar.js') }}"></script>
     <script src="{{ asset('frontend/plugins/light-gallery/js/lightgallery-all.min.js') }}"></script>
     <script src="{{ asset('frontend/js/bootstrap-datetimepicker.min.js') }}"></script>
+    @include('sweetalert::alert')
     <script src="{{ asset('frontend/js/app.js') }}"></script>
     <script>
         $(function () {
@@ -69,5 +72,7 @@
             });
         });
     </script>
+
+    @stack('scripts')
 </body>
 </html>

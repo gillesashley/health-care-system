@@ -9,6 +9,7 @@ use GuzzleHttp\Psr7\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class DoctorController extends Controller
 {
@@ -164,6 +165,8 @@ class DoctorController extends Controller
      */
     public function destroy(Doctor $doctor)
     {
-        //
+        $doctor->delete();
+
+        return back()->with('success', 'Doctor Deleted!!');
     }
 }
