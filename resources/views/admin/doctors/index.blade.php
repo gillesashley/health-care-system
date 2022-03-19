@@ -22,11 +22,7 @@
                     <div class="dropdown profile-action">
                         <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-ellipsis-v"></i></a>
                         <div class="dropdown-menu dropdown-menu-right">
-<<<<<<< HEAD
-                            <a class="dropdown-item" href="#"><i class="fa fa-pencil m-r-5"></i>
-=======
                             <a class="dropdown-item" href="{{ route('admin.doctors.edit',['doctor'=> $doctor->id]) }}"><i class="fa fa-pencil m-r-5"></i>
->>>>>>> a4c8a08c7bf6d03cc2b23003df1e9d34f3683327
                                 Edit</a>
                             <a class="dropdown-item" href="#" data-toggle="modal" data-target="#delete_doctor"><i class="fa fa-trash-o m-r-5"></i> Delete</a>
                         </div>

@@ -3,6 +3,8 @@
 namespace App\Models;
 
 // use App\Http\Traits\UpdatableAndCreateable;
+
+use Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -17,6 +19,9 @@ class Doctor extends Model
     protected $primaryKey = 'id';
     // protected $password;
     protected $hidden = ['password'];
+    protected $cast = [
+        'active' => 'boolean'
+    ];
 
     protected $fillable = [
         'firstname',
@@ -53,5 +58,11 @@ class Doctor extends Model
     public function updatedBy(): BelongsTo
     {
         return $this->belongsTo(User::class, 'updated_by_id', 'id');
+    }
+
+    public function password():Attribute  {
+        return Attribute::make(
+            set: fn($value) => Hash::make($value)
+        );
     }
 }

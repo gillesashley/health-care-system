@@ -62,17 +62,15 @@ class DoctorController extends Controller
             //code...
             $imageName = Storage::disk('public')->put('images', $request->file('image'));
 
-            DB::transaction(function () use ($request, $imageName) {
+            $doctor = DB::transaction(function () use ($request, $imageName) {
 
-                [$day, $month, $year] = explode('/', $request->validated()['dob']);
-
-                $doctor = Doctor::create([
+                return Doctor::create([
                     'firstname' => $request->input('firstname'),
                     'lastname' => $request->input('lastname'),
                     'username' => $request->input('username'),
                     'email' => $request->input('email'),
-                    'password' => Hash::make($request->input('password')),
-                    'dob' => "$year-$month-$day",
+                    'password' => $request->input('password'),
+                    'dob' => $request->input('dob'),
                     'gender' => $request->input('gender'),
                     'address' => $request->input('address'),
                     'country' => $request->input('country'),
@@ -85,7 +83,7 @@ class DoctorController extends Controller
                 ]);
             });
 
-            return back()->with('success', 'Doctor Created!!');
+            return redirect()->route('admin.doctors.show', ['doctor' => $doctor->id])->with('success', 'Doctor Created!!');
         } catch (\Throwable $th) {
             if (strlen($imageName)) {
                 //remove the image if the doctor could not be created
@@ -136,30 +134,24 @@ class DoctorController extends Controller
 
         try {
             DB::transaction(function () use ($request, $doctor) {
-                $data = collect($request->validated())->except('image', 'dob');
+                $data = collect($request->validated())->except('image');
                 $doctor->update($data->toArray());
 
-                if ($request->has('dob')) {
-                    [$day, $month, $year] = explode('/', $request->validated()['dob']);
-                    $doctor->update(['dob' => "$year-$month-$day"]);
-                }
-
-                if ($request->has('image')) {
+                if ($request->hasFile('image')) {
                     if (Storage::disk('public')->exists($doctor->image)) {
                         Storage::disk('public')->delete($doctor->image);
-                        $doctor->update(['imageName' => '']);
+                        $doctor->update(['image' => '']);
                     }
 
                     $imageName = Storage::disk('public')->put('images', $request->file('image'));
-                    $doctor->update(['imageName' => $imageName]);
+                    $doctor->update(['image' => $imageName]);
                 }
 
                 $doctor->refresh();
-
-                return redirect()->route('admin.doctors.show', ['doctor' => $doctor->id])->with('success', 'Doctor Updated', 'doctor');
             });
+            return back()->with('success', 'Doctor Updated');
         } catch (\Throwable $th) {
-            Storage::disk('public')->delete("images/{$imageName}");
+            if (!$imageName) Storage::disk('public')->delete("images/{$imageName}");
             throw $th;
         }
     }
