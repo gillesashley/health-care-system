@@ -75,10 +75,15 @@
                                 @enderror
                             </div>
                         </div>
+                        <div class="col-md-12 m-t-20">
+
+                            <label for="change_password">Change password <span class="text-muted">check to change your password</span></label>
+                            <input type="checkbox" id="change_password" onchange="includePasswordFields(this.checked)" {{ $route_name == "admin.doctors.store" ? 'checked=true disabled': ''}}>
+                        </div>
                         <div class="col-sm-6">
                             <div class="form-group">
                                 <label for="password">Password</label>
-                                <input class="form-control @error('password') is-invalid @enderror" type="password" id="password" name="password"  required>
+                                <input class="form-control @error('password') is-invalid @enderror" x-form-field="password" type="password" id="password" {{ $route_name == 'admin.doctors.store'? 'required':''}}>
 
                                 @error('password')
                                 <span class="invalid-feedback" role="alert">
@@ -90,7 +95,7 @@
                         <div class="col-sm-6">
                             <div class="form-group">
                                 <label>Confirm Password</label>
-                                <input class="form-control" type="password" required name="confirm_password">
+                                <input class="form-control" x-form-field="password_confirmation" type="password" {{ $route_name == 'admin.doctors.store'? 'required':''}}>
 
                                 @error('password')
                                 <span class="invalid-feedback" role="alert">
@@ -103,7 +108,7 @@
                             <div class="form-group">
                                 <label for="dob">Date of Birth</label>
                                 <div class="cal-icon">
-                                    <input type="text" class="form-control datetimepicker @error('dob') is-invalid @enderror" id="dob" name="dob" value="{{ old('dob', $doctor->dob?? '' )}}" type="date">
+                                    <input type="text" class="form-control datetimepicker @error('dob') is-invalid @enderror" data-date-format="Y-MM-DD" id="dob" name="dob" value="{{ old('dob', $doctor->dob?? '' )}}" type="date" pattern="\d{4}-[0-1][0-9]-\d{2}" required>
                                 </div>
                             </div>
                         </div>
@@ -112,12 +117,12 @@
                                 <label class="gen-label" for="gender">Gender:</label>
                                 <div class="form-check-inline">
                                     <label class="form-check-label">
-                                        <input type="radio" name="gender" class="form-check-input" value="M" checked="{{ old('gender',$doctor->gender) == 'M'}}">Male
+                                        <input type="radio" name="gender" class="form-check-input" value="M" {{ old('gender',$doctor->gender) == 'M'? 'checked': ''}}>Male
                                     </label>
                                 </div>
                                 <div class="form-check-inline">
                                     <label class="form-check-label">
-                                        <input type="radio" name="gender"  class="form-check-input" value="F" checked="{{ old('gender',$doctor->gender) == 'F'}}">Female
+                                        <input type="radio" name="gender"  class="form-check-input" value="F" {{ old('gender',$doctor->gender) == 'F'? 'checked': ''}}>Female
                                     </label>
                                 </div>
                             </div>
@@ -175,7 +180,7 @@
                         <div class="col-sm-6">
                             <div class="form-group">
                                 <label for="phone">Phone </label>
-                                <input class="form-control" type="text @error('title') is-invalid @enderror" id="phone" name="phone" value="{{ old('phone', $doctor->phone?? '' )}}">
+                                <input class="form-control" type="text @error('title') is-invalid @enderror" id="phone" name="phone" value="{{ old('phone', $doctor->phone?? '' )}}" required>
 
                                 @error('phone')
                                 <span class="invalid-feedback" role="alert">
@@ -188,12 +193,11 @@
                             <div class="form-group">
                                 <label>Avatar</label>
                                 <div class="profile-upload">
-                                    <div class="upload-img">
-                                        <img alt="" src="{{ asset('frontend/img/user.jpg') }}">
-                                        <img src="{{ asset('storage/'.old('image',$doctor->image)) }}" alt="">
-                                    </div>
                                     <div class="upload-input">
-                                        <input type="file" class="form-control" name="image" value="{{ old('image', $doctor->image?? '' )}}" id="image">
+                                        <input type="file" class="form-control" name="image" value="{{ old('image', $doctor->image?? '' )}}" id="image" onchange="handleProfileImgChange(this.files)" {{$route_name == "admin.doctors.store"? 'required':''}}>
+                                    </div>
+                                    <div class="upload-img">
+                                        <img src="{{ old('image',asset('storage/'. $doctor->image)) }}" alt="new doctor profile" class="w-100 h-auto">
                                     </div>
                                 </div>
                             </div>
@@ -201,31 +205,69 @@
                     </div>
                     <div class="form-group">
                         <label for="short_bio">Short Biography</label>
-                        <textarea class="form-control" rows="3" cols="30" id="short_bio" name="short_bio" value="{{ old('short_bio', $doctor->short_bio)?? '' }}"></textarea>
+                        <textarea class="form-control" rows="3" cols="30" id="short_bio" name="short_bio">{{ old('short_bio', $doctor->short_bio)?? '' }}</textarea>
                     </div>
                     <div class="form-group">
                         <label class="display-block" for="status">Status</label>
                         <div class="form-check form-check-inline">
                             <input class="form-check-input" type="radio" name="status" value="1" id="doctor_active"
-                             checked="{{ in_array(old('status',$doctor->status),["1",1, true]) }}">
+                             {{ in_array(old('status',$doctor->status),["1",1, true])? 'checked': '' }}>
                             <label class="form-check-label" for="doctor_active">
                                 Active
                             </label>
                         </div>
                         <div class="form-check form-check-inline">
                             <input class="form-check-input" type="radio" name="status" value="0" id="doctor_inactive"
-                              checked={{ in_array(old('status',$doctor->status),["0",0, false])  }}>
+                              {{ in_array(old('status',$doctor->status),["0",0, false])? 'checked': ''  }}>
                             <label class="form-check-label" for="doctor_inactive">
                                 Inactive
                             </label>
                         </div>
                     </div>
                     <div class="m-t-20 text-center">
-                        <button type="submit" class="btn btn-primary submit-btn">{{in_array('edit',explode('.',$route_name))? 'Update': 'Create Doctor'}}</button>
+                        <button type="submit" class="btn btn-primary submit-btn">{{in_array('store',explode('.',$route_name))? 'Create Doctor':'Update'}}</button>
                     </div>
                 </form>
             </div>
         </div>
     </div>
 </div>
+
+<script>
+    function handleProfileImgChange(/**@type File*/ [file]){
+        console.log(file)
+        let reader = new FileReader()
+        reader.onload = ()=> document.querySelector('img[alt="new doctor profile"]').setAttribute('src', reader.result)
+        reader.readAsDataURL(file)
+    }
+
+    function includePasswordFields(should_include = false){
+
+        console.log('includePasswordFields:fired')
+        /**@type Element */
+        let e_password = document.querySelector('[x-form-field="password"]')
+        let e_password_confirmation = document.querySelector('[x-form-field="password_confirmation"]')
+
+        if (should_include){
+            e_password.setAttribute('name','password')
+            e_password_confirmation.setAttribute('name','password_confirmation')
+            e_password.setAttribute('required','required')
+            e_password_confirmation.setAttribute('required','required')
+            e_password.removeAttribute('disabled')
+            e_password_confirmation.removeAttribute('disabled')
+        }
+
+        else{
+            e_password.removeAttribute('name')
+            e_password_confirmation.removeAttribute('name')
+            e_password.removeAttribute('required')
+            e_password_confirmation.removeAttribute('required')
+            e_password.setAttribute('disabled','disabled')
+            e_password_confirmation.setAttribute('disabled','disabled')
+
+        }
+    }
+
+    includePasswordFields({{ $route_name == 'admin.doctors.store'}})
+</script>
 @endsection
