@@ -167,6 +167,6 @@ class DoctorController extends Controller
     {
         $doctor->delete();
 
-        return back()->with('success', 'Doctor Deleted!!');
+        return back()->with('question', 'Are you sure?');
     }
 }

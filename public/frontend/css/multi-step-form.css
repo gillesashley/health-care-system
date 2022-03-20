@@ -13,7 +13,7 @@ p {
 
 #heading {
     text-transform: uppercase;
-    color: #673AB7;
+    color: #009efb;
     font-weight: normal
 }
 
@@ -63,13 +63,13 @@ p {
     -moz-box-shadow: none !important;
     -webkit-box-shadow: none !important;
     box-shadow: none !important;
-    border: 1px solid #673AB7;
+    border: 1px solid #009efb;
     outline-width: 0
 }
 
 #msform .action-button {
     width: 100px;
-    background: #673AB7;
+    background: #009efb;
     font-weight: bold;
     color: white;
     border: 0 none;
@@ -111,14 +111,14 @@ p {
 
 .fs-title {
     font-size: 25px;
-    color: #673AB7;
+    color: #009efb;
     margin-bottom: 15px;
     font-weight: normal;
     text-align: left
 }
 
 .purple-text {
-    color: #673AB7;
+    color: #009efb;
     font-weight: normal
 }
 
@@ -142,7 +142,7 @@ p {
 }
 
 #progressbar .active {
-    color: #673AB7
+    color: #009efb
 }
 
 #progressbar li {
@@ -200,7 +200,7 @@ p {
 
 #progressbar li.active:before,
 #progressbar li.active:after {
-    background: #673AB7
+    background: #009efb
 }
 
 .progress {
@@ -208,7 +208,7 @@ p {
 }
 
 .progress-bar {
-    background-color: #673AB7
+    background-color: #009efb
 }
 
 .fit-image {

@@ -20,7 +20,7 @@
             <h3>HOSPITAL SYSTEM CONFIGURATION</h3>
             <div class="row justify-content-center">
                 <div class="col-11 col-sm-9 col-md-7 col-lg-6 col-xl-5 text-center p-0 mt-3 mb-2">
-                    <div class="card px-0 pt-4 pb-0 mt-3 mb-3">
+                    <div class="card px-8 pt-4 pb-0 mt-3 mb-3">
                         <h2 id="heading">Sign Up Your User Account</h2>
                         <p>Fill all form field to go to next step</p>
                         <form id="msform">
@@ -39,13 +39,13 @@
                                 <div class="form-card">
                                     <div class="row">
                                         <div class="col-7">
-                                            <h2 class="fs-title">Account Information:</h2>
+                                            <h2 class="fs-title">Hospital Information:</h2>
                                         </div>
                                         <div class="col-5">
                                             <h2 class="steps">Step 1 - 4</h2>
                                         </div>
-                                    </div> <label class="fieldlabels">Email: *</label> <input type="email" name="email"
-                                        placeholder="Email Id" /> <label class="fieldlabels">Username: *</label> <input
+                                    </div> <label class="fieldlabels">Name</label> <input type="email" name="email"
+                                        placeholder="Email Id" /> <label class="fieldlabels">Website</label> <input
                                         type="text" name="uname" placeholder="UserName" /> <label class="fieldlabels">Password:
                                         *</label> <input type="password" name="pwd" placeholder="Password" /> <label
                                         class="fieldlabels">Confirm Password: *</label> <input type="password" name="cpwd"
@@ -97,7 +97,7 @@
                                     </div> <br><br>
                                     <h2 class="purple-text text-center"><strong>SUCCESS !</strong></h2> <br>
                                     <div class="row justify-content-center">
-                                        <div class="col-3"> <img src="https://i.imgur.com/GwStPmg.png" class="fit-image"> </div>
+                                        <div class="col-3"> <img src="{{ asset('frontend/img/GwStPmg.png') }}" class="fit-image"> </div>
                                     </div> <br><br>
                                     <div class="row justify-content-center">
                                         <div class="col-7 text-center">

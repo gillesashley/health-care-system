@@ -6,8 +6,8 @@
         <div class="row">
             <div class="col-sm-4 col-3">
                 <h4 class="page-title">Doctors</h4>
-                @if (session('success'))
-                    {{ session('success') }}
+                @if (session('question'))
+                    {{ session('question') }}
                 @endif
             </div>
             <div class="col-sm-8 col-9 text-right m-b-20">
@@ -46,3 +46,27 @@
     </div>
 </div>
 @endsection
+
+@push('scripts')
+    <script type="text/javascript">
+ 
+        $('.show_confirm').click(function(event) {
+            var form =  $(this).closest("form");
+            var name = $(this).data("name");
+            event.preventDefault();
+            swal({
+                title: `Are you sure you want to delete this record?`,
+                text: "If you delete this, it will be gone forever.",
+                icon: "warning",
+                buttons: true,
+                dangerMode: true,
+            })
+            .then((willDelete) => {
+                if (willDelete) {
+                form.submit();
+                }
+            });
+        });
+    
+    </script>
+@endpush

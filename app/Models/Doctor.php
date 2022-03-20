@@ -60,9 +60,10 @@ class Doctor extends Model
         return $this->belongsTo(User::class, 'updated_by_id', 'id');
     }
 
-    public function password():Attribute  {
+    public function password(): Attribute
+    {
         return Attribute::make(
-            set: fn($value) => Hash::make($value)
+            set: fn ($value) => Hash::make($value)
         );
     }
 }
